@@ -50,8 +50,8 @@ const config = Object.freeze({
     responseStyle: 'decide',
   },
   defaultGeminiToolPreferences: {
-    googleSearch: true,
-    urlContext: true,
+    googleSearch: false,
+    urlContext: false,
     codeExecution: false,
   },
   chatHistoryLimits: {
