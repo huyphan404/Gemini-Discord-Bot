@@ -21,7 +21,6 @@ import {
   applyEmbedFallback,
   createStatusEmbed,
   canSendMessages,
-  getMentionPattern,
 } from '../utils/discord.js';
 import { logError } from '../utils/errorHandler.js';
 
@@ -167,10 +166,12 @@ export async function handleTextMessage(message) {
   const { historyId, sessionName, instructions } = getActiveSessionDetails(message.author.id);
   const deleteHistoryRef = toDeleteHistoryRef(historyId, message.author.id);
 
-  const mentionPattern = clientUserId ? getMentionPattern(clientUserId) : null;
-  let messageContent = mentionPattern
-    ? message.content.replace(mentionPattern, '').trim()
-    : message.content.trim();
+  let messageContent = message.content.trim();
+  
+  if (clientUserId) {
+    const mentionRegex = new RegExp(`^<@!?${clientUserId}>\\s*`);
+    messageContent = messageContent.replace(mentionRegex, '').trim();
+  }
     
   // Strip Reimu trigger
   messageContent = messageContent.replace(/^\s*reimu(?:\s+ơi)?(?:\s*[,!:：-])?\s*/i, '').trim();
