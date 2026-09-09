@@ -14,6 +14,8 @@ function createAdminGuildCommand(name, description) {
 
 export const commands = Object.freeze([
   new SlashCommandBuilder().setName('clear_memory').setDescription('Clears the conversation history.'),
+  new SlashCommandBuilder().setName('clearmem').setDescription('Xóa trí nhớ của Reimu'),
+  new SlashCommandBuilder().setName('random_reimu').setDescription('Gửi ảnh ngẫu nhiên của Reimu'),
   new SlashCommandBuilder().setName('settings').setDescription('Opens up settings.'),
   createAdminGuildCommand('server_settings', 'Opens up the server settings.'),
   createAdminGuildCommand('channel_settings', 'Opens up the channel settings for this channel.'),
