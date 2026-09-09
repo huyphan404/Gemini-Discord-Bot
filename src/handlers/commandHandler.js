@@ -192,6 +192,18 @@ async function handleWhitelistCommand(interaction) {
   });
 }
 
+async function handleRandomReimuCommand(interaction) {
+  const reimuImages = [
+    'https://i.pinimg.com/736x/87/40/d6/8740d6cda7ccfc737b6c5671edba58b3.jpg',
+    'https://i.pinimg.com/736x/21/cd/16/21cd1639d67566ab665f80e0cd287ba2.jpg',
+    'https://i.pinimg.com/736x/77/8f/1a/778f1a4ce38b446a8bc8fbe90ee853d9.jpg',
+    'https://i.pinimg.com/736x/8f/2c/83/8f2c83de7fce5389656885df40b3ff64.jpg',
+    'https://i.pinimg.com/736x/98/95/96/989596ba80dd8544c0cfb6388f6bdf63.jpg'
+  ];
+  const randomUrl = reimuImages[Math.floor(Math.random() * reimuImages.length)];
+  return interaction.reply({ content: "*(Ném ảnh vào mặt)* Đây, ngắm cho đã đi rồi nhớ cúng tiền!", files: [randomUrl] });
+}
+
 /** Routes a chat-input command interaction to its handler. */
 export async function handleCommandInteraction(interaction) {
   try {
@@ -203,6 +215,8 @@ export async function handleCommandInteraction(interaction) {
       unblock: handleWhitelistCommand,
       block: handleBlacklistCommand,
       clear_memory: handleClearMemoryCommand,
+      clearmem: handleClearMemoryCommand,
+      random_reimu: handleRandomReimuCommand,
       settings: showSettings,
       server_settings: async (cmd) => {
         if (!(await requireGuildAdmin(cmd))) {
@@ -236,4 +250,3 @@ export async function handleCommandInteraction(interaction) {
     await replyWithError(interaction, 'Command Error', 'An error occurred while running this command.');
   }
 }
-
