@@ -14,9 +14,9 @@ import {
 import { getActiveSessionDetails } from './sessionService.js';
 import { buildConversationContext } from './conversationContext.js';
 import { streamModelResponse } from './streamingService.js';
-import { processPromptAndMediaAttachments, extractFileText, getUnsupportedAttachments, hasSupportedAttachments } from './attachmentService.js';
+import { processPromptAndMediaAttachments, extractFileText, getUnsupportedAttachments, hasSupportedAttachments, extractYouTubeUrls } from './attachmentService.js';
 import { addSettingsButton, attachActionButtons } from '../ui/messageActions.js';
-import { TYPING_HEARTBEAT_INTERVAL_MS, YOUTUBE_URL_REGEX } from '../constants.js';
+import { MESSAGE_TYPING_INTERVAL_MS } from '../constants.js';
 import {
   applyEmbedFallback,
   createStatusEmbed,
@@ -24,15 +24,6 @@ import {
   getMentionPattern,
 } from '../utils/discord.js';
 import { logError } from '../utils/errorHandler.js';
-
-function extractYouTubeUrls(text) {
-  const urls = [];
-  let match;
-  while ((match = YOUTUBE_URL_REGEX.exec(text)) !== null) {
-    urls.push(match[0]);
-  }
-  return urls;
-}
 
 // ---------------------------------------------------------------------------
 // Action Buttons Data
@@ -95,7 +86,7 @@ function createTypingHeartbeat(channel) {
   };
 
   type();
-  typingInterval = setInterval(type, TYPING_HEARTBEAT_INTERVAL_MS);
+  typingInterval = setInterval(type, MESSAGE_TYPING_INTERVAL_MS);
 
   return () => {
     if (typingInterval) clearInterval(typingInterval);
