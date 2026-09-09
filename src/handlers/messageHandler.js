@@ -1,5 +1,4 @@
 import { ChannelType } from 'discord.js';
-
 import { activeRequests, client } from '../core/runtime.js';
 import {
   initializeGuildState,
@@ -18,11 +17,14 @@ function shouldRespondToMessage(message) {
   if (message.mentions.everyone && !message.mentions.users.has(client.user.id)) {
     return false;
   }
+  
+  const matchReimu = /^\s*reimu(?:\s+ơi)?(?:\s*[,!:：-])?(?:\s|$)/i.test(message.content);
 
   return (
     (WORK_IN_DMS && isDirectMessage) ||
     Boolean(state.alwaysRespondChannels[message.channelId]) ||
     (!isDirectMessage && message.mentions.users.has(client.user.id)) ||
+    matchReimu ||
     isChannelUserActive(message.channelId, message.author.id)
   );
 }
@@ -77,6 +79,7 @@ export async function handleMessageCreate(message) {
   try {
     if (message.guild) {
       initializeGuildState(message.guild.id);
+
       if (isUserBlacklisted(message.guild.id, message.author.id)) {
         await replyBlacklisted(message);
         return;
