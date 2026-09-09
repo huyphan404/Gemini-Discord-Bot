@@ -19,8 +19,8 @@ const configPath = path.join(__dirname, 'config.js');
 
 const defaultConfig = `// For advanced configuration, edit \`constants.js\`.
 const config = Object.freeze({
-  defaultModel: 'gemini-2.0-flash', // Làn đường 2.0 VIP, không kẹt xe 503
-  nanoBananaModel: 'gemini-2.5-flash-image',
+  defaultModel: 'gemini-3.8-flash', // Làn đường 2.0 VIP, không kẹt xe 503
+  nanoBananaModel: 'gemini-3.8-flash-image',
   enableNanoBananaMode: false,
   maxGenerationAttempts: 3,
   defaultResponseFormat: 'Plain', // Dùng chữ trơn như người thật, không dùng Embed
