@@ -273,7 +273,9 @@ export async function handleTextMessage(message) {
   const hasYouTubeContent = extractYouTubeUrls(messageContent).length > 0;
 
   if (!messageContent && !hasYouTubeContent && !(message.attachments.size > 0 && hasSupportedAttachments(message))) {
-    messageContent = "*(Nheo mắt)* Ngươi gọi ta có việc gì? Không cúng dường thì đừng quấy rầy giấc ngủ trưa của ta.";
+    const response = await message.reply({ content: "*(Nheo mắt)* Ngươi gọi ta có việc gì? Không cúng dường thì đừng quấy rầy giấc ngủ trưa của ta." });
+    await attachActionButtons(response, messageToActionContext(message));
+    return;
   }
 
   const stopTyping = createTypingHeartbeat(message.channel);
