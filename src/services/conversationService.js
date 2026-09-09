@@ -15,7 +15,7 @@ import { getActiveSessionDetails } from './sessionService.js';
 import { buildConversationContext } from './conversationContext.js';
 import { streamModelResponse } from './streamingService.js';
 import { processPromptAndMediaAttachments, extractFileText, getUnsupportedAttachments, hasSupportedAttachments, extractYouTubeUrls } from './attachmentService.js';
-import { addSettingsButton, attachActionButtons } from '../ui/messageActions.js';
+import { addSettingsButton } from '../ui/messageActions.js';
 import { MESSAGE_TYPING_INTERVAL_MS } from '../constants.js';
 import {
   applyEmbedFallback,
@@ -159,7 +159,7 @@ async function sendErrorReply(message, processingMessage, deleteHistoryRef) {
 export async function handleTextMessage(message) {
   if (isRequestLimitReached()) {
     const response = await message.reply(applyEmbedFallback(message.channel, { embeds: [createLimitReachedEmbed()] }));
-    await attachActionButtons(response, messageToActionContext(message));
+    await addSettingsButton(response);
     return;
   }
 
